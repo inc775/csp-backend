@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/usr/bin/curl -H "Content-Type: application/json" -X POST -d @csp-request.json https://localhost/report
+
