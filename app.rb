@@ -7,7 +7,7 @@ require 'json/ext'
 require 'uri'
 
 configure do
-  db = Mongo::Client.new([ ENV['MONGO_URL'] ], :database => ENV['MONGO_DATABASE'] )
+  db = Mongo::Client.new([ ENV['MONGO_PORT_27017_TCP_ADDR']:ENV['MONGO_PORT_27017_TCP_PORT'] ], :database => ENV['MONGO_DATABASE'] )
   set :mongo_db, db[:csp]
 end
 
