@@ -9,7 +9,7 @@ require 'uri'
 configure do
   db = Mongo::Client.new([ ENV['MONGO_PORT_27017_TCP_ADDR'] ], :database => 'csp' )
   set :mongo_db, db[:csp]
-  Mongo::Logger.logger.level = ::Logger::FATAL
+  
 end
 
 helpers do
@@ -64,8 +64,14 @@ post '/report' do
   csp_report = JSON.parse(request.body.read.to_s)
   hostname = get_hostname_from_url(csp_report['csp-report']['document-uri'])
   csp_report['csp-report']['document-uri'] = hostname
-  result = db.insert_one csp_report
-  db.find(:_id => result.inserted_id).to_a.first.to_json
+  begin
+    result = db.insert_one csp_report
+    "ok"
+  rescue Mongo::Error::OperationFailure => e
+    logger.debug "[*] #{e.message}"
+    "ok"
+  end
+
 end
 
 get '/build/:hostname/?' do
