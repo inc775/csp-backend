@@ -7,8 +7,9 @@ require 'json/ext'
 require 'uri'
 
 configure do
-  db = Mongo::Client.new([ ENV['MONGO_PORT_27017_TCP_ADDR']:ENV['MONGO_PORT_27017_TCP_PORT'] ], :database => ENV['MONGO_DATABASE'] )
+  db = Mongo::Client.new([ ENV['MONGO_PORT_27017_TCP_ADDR'] ], :database => 'csp' )
   set :mongo_db, db[:csp]
+  Mongo::Logger.logger.level = ::Logger::FATAL
 end
 
 helpers do
@@ -22,7 +23,7 @@ helpers do
   end
 
   def build_csp(reported_blocks)
-    content_security_policy = "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; report-uri https://u.4armed.io/report; object-src 'none'; "
+    content_security_policy = "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; report-uri https://csp.4armed.io/report; object-src 'none'; "
     directives = {}
 
     reported_blocks.each do |block|
