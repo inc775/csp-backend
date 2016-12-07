@@ -12,5 +12,6 @@ ADD Procfile .
 ADD config.ru .
 RUN bundle install --deployment --without development test
 ADD app.rb .
+ADD public/ public/
 
 CMD ["bundle", "exec" , "foreman","start","-d","/app"]

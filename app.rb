@@ -85,7 +85,7 @@ post '/report' do
 
 end
 
-get '/build/:hostname/?' do
+get '/policy/:hostname/?' do
   content_type :json
 
   db = settings.mongo_db
