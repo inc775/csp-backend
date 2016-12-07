@@ -5,6 +5,7 @@ require 'json'
 require 'mongo'
 require 'json/ext'
 require 'uri'
+require 'cgi'
 
 configure do
   Mongo::Logger.logger.level = ::Logger::FATAL
@@ -15,7 +16,12 @@ end
 
 helpers do
   def get_hostname_from_url(url)
-    URI.parse(url).host
+    u = URI.parse(url)
+    if [80, 443].include? u.port
+      u.host
+    else
+      "#{u.host}:#{u.port}"
+    end
   end
 
   def remove_path_from_url(url)
@@ -89,6 +95,13 @@ get '/policy/:hostname/?' do
   content_type :json
 
   db = settings.mongo_db
-  reported_blocks = db.find({ "csp-report.document-uri": params[:hostname]})
+  reported_blocks = db.find({ "csp-report.document-uri": CGI.unescape(params[:hostname])})
   build_csp reported_blocks, params[:unsafe]
+end
+
+delete '/policy/:hostname/?' do
+  content_type :json
+
+  db = settings.mongo_db
+  db.delete_many({ "csp-report.document-uri": CGI.unescape(params[:hostname])}) unless params[:hostname].nil?
 end
