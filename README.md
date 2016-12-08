@@ -90,3 +90,13 @@ But there is another way!
 Using our open source [Google Chrome Extension](https://github.com/4armed/csp-generator-extension) you can insert CSP headers for any website just in your Chrome browser. The best thing is that it provides a neat way to interact with the API so you can then generate the policy and try it out right in your browser.
 
 Head on over to that Github page for more info and a demo video.
+
+## Test page
+
+There's a test page included that incorporates a bunch of script, images and styles so you can play around with CSP. This test page is designed to be used with the Google Chrome Extension as otherwise you're back to playing around with HTTP response headers in Rack or Sinatra.
+
+## Changes
+
+Please feel free to fork this repo and submit improvements. There will be lots!!
+
+Send pull requests from a dedicated branch for your proposed changes.
