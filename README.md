@@ -75,11 +75,11 @@ default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';
 
 Browse the target site and it will record violations via the app into Mongo.
 
-To create a policy just go to http://localhost:4567/policy/<url of site>. Let's say you were building a CSP config for www<span>.bbc.co</span>.uk then you would go to http://localhost:4567/policy/<span>www.b</span>bc.co.uk. 
+To create a policy just go to http://localhost:4567/policy/<url of site>. Let's say you were building a CSP config for w<span>ww.bbc.co</span>.uk then you would go to http://localhost:4567/policy/<span>ww</span>w.bbc.co.uk. 
 
 Non-standard ports are supported, just append the colon and port number at the end, making sure the colon is URL encoded as %3A.
 
-http://localhost:4567/policy/<span>www.bb</span>c.co.uk%3A81
+http://localhost:4567/policy/w<span>ww.bb</span>c.co.uk%3A81
 
 ## How to set the CSP header on the remote site.
 
