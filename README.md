@@ -87,6 +87,6 @@ Of course, how you add HTTP response headers will depend on the website in quest
 
 But there is another way!
 
-Using our open source [Google Chrome Extension](https://github.com/4armed/csp-generator-extension) you can insert CSP headers for any website just in your Chrome browser. The best thing is you can then generate the policy and try it out.
+Using our open source [Google Chrome Extension](https://github.com/4armed/csp-generator-extension) you can insert CSP headers for any website just in your Chrome browser. The best thing is that it provides a neat way to interact with the API so you can then generate the policy and try it out right in your browser.
 
 Head on over to that Github page for more info and a demo video.
