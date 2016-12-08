@@ -14,7 +14,15 @@ If you are not installing it in Docker then you're probably either crazy or you'
 
    I recommended using RVM or rbenv to get your Ruby installed.
 
-2. MongoDB
+2. Bundler
+
+   CSP Generator uses Bundler to manage the required gems. Install it:
+
+   ```shell
+   $ gem install bundler
+   ```
+
+3. MongoDB
 
    The backend data store is MongoDB so you will need an instance of this running. If you're on macOS you can use HomeBrew (if you've installed it) and do:
 
@@ -28,3 +36,56 @@ If you are not installing it in Docker then you're probably either crazy or you'
    $ mongod --config /usr/local/etc/mongod.conf &
    ```
 
+## Installation
+
+1. Clone this repo
+
+   ```shell
+   $ git clone https://github.com/4armed/csp-backend.git
+   ```
+
+2. Install Ruby dependencies
+
+   ```shell
+   $ cd csp-backend
+   $ bundle install
+
+3. Start the app
+
+   ```shell
+   $ ruby app.rb
+   == Sinatra (v1.4.7) has taken the stage on 4567 for development with backup from Thin
+   Thin web server (v1.7.0 codename Dunder Mifflin)
+   Maximum connections set to 1024
+   Listening on localhost:4567, CTRL+C to stop
+   ```
+
+# Usage
+
+The app is now up and running on localhost:4567. Using this configuration you can generate and test CSPs for any non-HTTPS website by setting the remote site's report-uri to http://localhost:4567/report.
+
+The best approach is to set a very restrictive (i.e. permit nothing) CSP using the Content-Security-Policy-Report-Only HTTP response header. This will not interrupt the functioning of the site but will generate all the report violations we need.
+
+An example policy is:
+
+```
+default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; report-uri http://localhost:4567/report;
+```
+
+Browse the target site and it will record violations via the app into Mongo.
+
+To create a policy just go to http://localhost:4567/policy/<url of site>. Let's say you were building a CSP config for www.bbc.co.uk then you would go to http://localhost:4567/policy/www.bbc.co.uk. 
+
+Non-standard ports are supported, just append the colon and port number at the end, making sure the colon is URL encoded as %3A.
+
+http://localhost:4567/policy/www.bbc.co.uk%3A81
+
+## How to set the CSP header on the remote site.
+
+Of course, how you add HTTP response headers will depend on the website in question. Apache and Nginx have set directives for headers. IIS headers can be configured in the IIS Management Console.
+
+But there is another way!
+
+Using our open source [Google Chrome Extension](https://github.com/4armed/csp-generator-extension) you can insert CSP headers for any website just in your Chrome browser. The best thing is you can then generate the policy and try it out.
+
+Head on over to that Github page for more info and a demo video.
