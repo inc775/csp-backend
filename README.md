@@ -49,6 +49,7 @@ If you are not installing it in Docker then you're probably either crazy or you'
    ```shell
    $ cd csp-backend
    $ bundle install
+   ```
 
 3. Start the app
 
