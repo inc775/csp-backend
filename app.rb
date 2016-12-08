@@ -9,7 +9,8 @@ require 'cgi'
 
 configure do
   Mongo::Logger.logger.level = ::Logger::FATAL
-  db = Mongo::Client.new([ ENV['MONGO_PORT_27017_TCP_ADDR'] ], :database => 'csp' )
+  host = ENV['MONGO_PORT_27017_TCP_ADDR'] || '127.0.0.1'
+  db = Mongo::Client.new([ host ], :database => 'csp' )
   set :mongo_db, db[:csp]
   
 end
